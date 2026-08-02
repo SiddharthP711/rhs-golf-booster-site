@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravens on the Green | RHS Golf Booster Club</title>
+<meta name="description" content="Ravens on the Green is the official 501(c)(3) booster club for the Robbinsville High School golf team.">
+<link rel="icon" type="image/png" href="assets/raven-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #15803D;
+    --green-dark: #0F5C2E;
+    --green-light: #4CAF50;
+    --green-tint: #E9F7EC;
+    --bg-light: #F3FBF5;
+    --white: #FFFFFF;
+    --text: #26312B;
+    --text-muted: #5C6E64;
+    --border: #DCEBE0;
+    --red: #D64545;
+    --red-dark: #A32E2E;
+    --red-tint: #FBEAEA;
+    --yellow: #F0B429;
+    --yellow-dark: #92660D;
+    --yellow-tint: #FDF3DC;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+    --shadow: 0 10px 30px rgba(21, 128, 61, 0.12);
+    --shadow-sm: 0 1px 3px rgba(21, 128, 61, 0.08);
+    --nav-height: 72px;
+    --cart-bar-height: 76px;
+    --transition: 200ms ease;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: hidden; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    margin: 0; font-family: 'Open Sans', sans-serif; color: var(--text);
+    background: var(--white); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+  }
+  body.has-cart-bar { padding-bottom: var(--cart-bar-height); }
+  h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; line-height: 1.25; margin: 0 0 0.5em; }
+  p { margin: 0 0 1em; }
+  a { color: inherit; }
+  img, svg { max-width: 100%; display: block; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 88px 0; scroll-margin-top: var(--nav-height); }
+  .section-light { background: var(--bg-light); }
+  .section-white { background: var(--white); }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; font-size: 0.8rem;
+    color: var(--green-light); margin: 0 0 0.7em;
+  }
+  .center { text-align: center; }
+  .lead { font-size: 1.1rem; color: var(--text-muted); max-width: 68ch; }
+  .lead.center { margin-left: auto; margin-right: auto; }
+
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+  .skip-link {
+    position: absolute; left: -999px; top: 0; background: var(--green-dark); color: #fff;
+    padding: 12px 20px; z-index: 2000; border-radius: 0 0 8px 0;
+  }
+  .skip-link:focus { left: 0; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem;
+    padding: 14px 28px; border-radius: 999px; border: 2px solid transparent;
+    cursor: pointer; text-decoration: none; min-height: 44px; white-space: nowrap;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green-dark); box-shadow: 0 8px 22px rgba(21, 128, 61, 0.3); transform: translateY(-2px); }
+  .btn-light { background: var(--green-light); color: #fff; }
+  .btn-light:hover { background: #3d9142; box-shadow: 0 8px 22px rgba(76, 175, 80, 0.35); transform: translateY(-2px); }
+  .btn-outline-light { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.65); }
+  .btn-outline-light:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--green); border-color: var(--green); }
+  .btn-outline:hover { background: var(--green-tint); }
+  .btn-sm { padding: 9px 18px; font-size: 0.85rem; }
+  .btn-lg { padding: 16px 32px; font-size: 1.02rem; }
+  .btn-block { width: 100%; }
+  .icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+  /* Nav */
+  .site-nav {
+    position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+    transition: box-shadow var(--transition);
+  }
+  .site-nav.is-scrolled { box-shadow: 0 4px 18px rgba(21, 128, 61, 0.08); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: var(--nav-height); max-width: 1140px; margin: 0 auto; padding: 0 24px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--green-dark); }
+  .nav-logo {
+    width: 42px; height: 42px; border-radius: 50%; background: var(--bg-light);
+    border: 2px solid var(--yellow); display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0;
+  }
+  .nav-logo img { width: 78%; height: auto; }
+  .nav-brand-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--green-dark); }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-link {
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem;
+    color: var(--text); text-decoration: none; transition: color var(--transition);
+  }
+  .nav-link:hover { color: var(--green); }
+  .nav-cta { margin-left: 4px; }
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; background: none; border: none; cursor: pointer;
+  }
+  .nav-toggle span { display: block; width: 24px; height: 2.5px; background: var(--green-dark); border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  @media (max-width: 900px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: fixed; top: var(--nav-height); left: 0; right: 0;
+      height: calc(100vh - var(--nav-height)); height: calc(100dvh - var(--nav-height));
+      background: var(--white); flex-direction: column; align-items: stretch; gap: 0;
+      padding: 12px 24px 32px; transform: translateX(100%); transition: transform 260ms ease;
+      overflow-y: auto;
+    }
+    .nav-links.is-open { transform: translateX(0); }
+    .nav-link { padding: 15px 4px; border-bottom: 1px solid var(--border); font-size: 1.05rem; }
+    .nav-cta { margin: 18px 0 0; text-align: center; }
+  }
+
+  /* Hero */
+  .hero {
+    position: relative; color: #fff; text-align: center;
+    padding: 110px 24px 96px;
+    background:
+      radial-gradient(circle at 12% 15%, rgba(240, 180, 41, 0.16), transparent 42%),
+      radial-gradient(circle at 88% 82%, rgba(76, 175, 80, 0.22), transparent 45%),
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 42px),
+      linear-gradient(160deg, var(--green) 0%, var(--green-dark) 100%);
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
+  .hero-club-name { color: var(--yellow); font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin-bottom: 0.3em; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25); }
+  .hero-subtitle { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: clamp(1.1rem, 2.4vw, 1.4rem); color: #fff; margin-bottom: 0.6em; }
+  .hero-tagline { font-size: 1.1rem; color: #DCF0DE; max-width: 52ch; margin: 0 auto 2.2em; }
+  .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+
+  /* Cards grid: What We Fund */
+  .fund-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 48px; }
+  @media (min-width: 860px) { .fund-grid { grid-template-columns: repeat(4, 1fr); } }
+  .fund-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px 20px; text-align: center; box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .fund-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(21, 128, 61, 0.16); }
+  .fund-icon {
+    width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
+    background: var(--bg-light); display: flex; align-items: center; justify-content: center;
+  }
+  .fund-icon svg { width: 28px; height: 28px; color: var(--green); }
+  .fund-card h3 { font-size: 1.02rem; margin-bottom: 0.4em; }
+  .fund-card p { font-size: 0.88rem; color: var(--text-muted); margin: 0; }
+
+  /* Golf outing */
+  .outing {
+    background:
+      radial-gradient(circle at 90% 8%, rgba(240, 180, 41, 0.14), transparent 40%),
+      linear-gradient(160deg, var(--green) 0%, var(--green-dark) 100%);
+    color: #fff;
+  }
+  .outing .eyebrow { color: var(--yellow); }
+  .outing h2 { color: #fff; }
+  .outing-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+  @media (min-width: 900px) { .outing-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .outing-details {
+    background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius); padding: 30px;
+  }
+  .outing-details h3 { color: var(--yellow); font-size: 1.1rem; }
+  .outing-venue { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.8em; }
+  .outing-list { display: flex; flex-direction: column; gap: 12px; margin: 0 0 0; padding: 0; }
+  .outing-list li { display: flex; gap: 10px; align-items: flex-start; color: #E4F3E6; font-size: 0.96rem; }
+  .outing-list svg { width: 20px; height: 20px; color: var(--yellow); flex-shrink: 0; margin-top: 2px; }
+
+  .countdown { display: flex; gap: 10px; margin: 28px auto 0; justify-content: center; flex-wrap: wrap; }
+  .countdown-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius); width: 74px; height: 74px;
+  }
+  .countdown-num { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .countdown-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 5px; color: #DCF0DE; }
+
+  /* Tier tabs & lists (cart) */
+  .tier-tabs { display: flex; gap: 10px; margin: 0 0 26px; flex-wrap: wrap; }
+  .tier-tab {
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.86rem;
+    padding: 9px 18px; border-radius: var(--radius-pill); border: 1.5px solid rgba(255, 255, 255, 0.35);
+    background: transparent; color: #fff; cursor: pointer; transition: all var(--transition); min-height: 40px;
+  }
+  .tier-tab:hover { border-color: var(--yellow); }
+  .tier-tab.is-active { background: var(--yellow); border-color: var(--yellow); color: #3D2B04; }
+
+  .tier-group-label {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.98rem;
+    margin: 26px 0 12px; color: #fff;
+  }
+  .tier-group-label:first-of-type { margin-top: 6px; }
+  .tier-group-label[hidden] { display: none; }
+  .deadline-pill {
+    font-family: 'Open Sans', sans-serif; font-weight: 600; font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.16); color: #fff; padding: 4px 11px; border-radius: var(--radius-pill);
+  }
+  .deadline-pill.urgent { background: var(--red-tint); color: var(--red-dark); }
+
+  .tier-list { display: flex; flex-direction: column; gap: 10px; }
+  .tier-list[hidden] { display: none; }
+  .tier-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16); border-radius: var(--radius); background: rgba(255, 255, 255, 0.06);
+    transition: box-shadow var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .tier-row:hover { border-color: rgba(255, 255, 255, 0.35); }
+  .tier-row.is-in-cart { border-color: var(--yellow); background: rgba(240, 180, 41, 0.12); }
+  .tier-row.is-featured { border-color: var(--yellow); }
+  .tier-main { flex: 1; min-width: 0; }
+  .tier-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tier-name { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+  .tier-badge {
+    font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em;
+    background: var(--yellow); color: #3D2B04; padding: 2px 8px; border-radius: var(--radius-pill);
+  }
+  .tier-desc { color: #DCEEDF; font-size: 0.88rem; margin: 0; }
+  .tier-price { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; white-space: nowrap; color: #fff; }
+  .tier-action { flex-shrink: 0; }
+
+  .tier-addon { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255, 255, 255, 0.22); }
+  .tier-addon label { display: flex; align-items: center; gap: 10px; font-size: 0.87rem; color: #E4F3E6; cursor: pointer; }
+  .tier-addon input { width: 18px; height: 18px; accent-color: var(--yellow); flex-shrink: 0; }
+
+  .qty-stepper { display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.14); border-radius: var(--radius-pill); padding: 4px; }
+  .qty-btn {
+    width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--white); color: var(--green-dark);
+    font-size: 1.15rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background var(--transition);
+  }
+  .qty-btn:hover { background: var(--yellow); }
+  .qty-val { min-width: 20px; text-align: center; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 640px) {
+    .tier-row { flex-wrap: wrap; }
+    .tier-price { order: 2; }
+    .tier-action { order: 3; margin-left: auto; }
+    .tier-main { order: 1; flex-basis: 100%; }
+  }
+
+  /* Checkout */
+  .checkout { margin-top: 40px; }
+  .checkout-empty {
+    text-align: center; padding: 34px 22px; border: 1px dashed rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg); color: #DCEEDF;
+  }
+  .checkout-form { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; background: var(--white); color: var(--text); box-shadow: var(--shadow); }
+  .checkout-form h3 { color: var(--text); }
+  .checkout-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-row-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 640px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
+
+  .field { margin-bottom: 14px; display: flex; flex-direction: column; }
+  .field label { font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; }
+  .field .req { color: var(--red); }
+  .field input, .field textarea {
+    font-family: 'Open Sans', sans-serif; font-size: 1rem; padding: 11px 13px; border-radius: 8px;
+    border: 1.5px solid var(--border); background: var(--white); color: var(--text);
+    min-height: 44px; transition: border-color var(--transition);
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--green-light); outline: none; }
+  .field textarea { min-height: 68px; resize: vertical; }
+  .field-hint { font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 0; }
+  .field-error { color: var(--red); font-size: 0.8rem; margin: 4px 0 0; min-height: 1.2em; }
+  .field.has-error input, .field.has-error textarea { border-color: var(--red); }
+
+  .checkbox-row { display: flex; align-items: center; gap: 10px; font-size: 0.92rem; cursor: pointer; margin-top: 6px; }
+  .checkbox-row input { width: 18px; height: 18px; accent-color: var(--green); }
+
+  .order-summary { margin: 14px 0; display: flex; flex-direction: column; gap: 8px; }
+  .order-summary li { display: flex; justify-content: space-between; gap: 12px; font-size: 0.92rem; padding: 4px 0; }
+  .order-summary .os-price { font-weight: 600; white-space: nowrap; }
+  .order-total {
+    display: flex; justify-content: space-between; align-items: center; font-family: 'Montserrat', sans-serif;
+    font-weight: 800; font-size: 1.25rem; padding: 14px 0; border-top: 2px solid var(--text); margin-bottom: 18px;
+    color: var(--green-dark);
+  }
+  .form-note { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin: 12px 0 0; }
+
+  .checkout-success { text-align: center; padding: 44px 22px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--white); color: var(--text); box-shadow: var(--shadow); }
+  .success-icon { width: 52px; height: 52px; color: var(--green); margin: 0 auto 14px; }
+  .checkout-success .btn { margin-top: 12px; }
+
+  /* Sticky cart bar */
+  .cart-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
+    background: var(--green-dark); color: #fff; box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.2);
+    height: var(--cart-bar-height); display: flex; align-items: center;
+  }
+  .cart-bar[hidden] { display: none; }
+  .cart-bar-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 16px; }
+  .cart-bar-summary { display: flex; flex-direction: column; }
+  .cart-bar-count { font-size: 0.8rem; color: var(--yellow); }
+  .cart-bar-total { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+
+  /* Benefits accordion */
+  .accordion { display: flex; flex-direction: column; gap: 10px; margin-top: 26px; }
+  .accordion-item { border: 1px solid var(--border); border-radius: var(--radius); background: var(--white); overflow: hidden; }
+  .accordion-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 20px; background: none; border: none; cursor: pointer; text-align: left;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.98rem; color: var(--text); min-height: 44px;
+  }
+  .accordion-trigger-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .accordion-price { color: var(--green); font-weight: 700; }
+  .accordion-chevron { width: 20px; height: 20px; transition: transform var(--transition); flex-shrink: 0; color: var(--green-light); }
+  .accordion-item.is-open .accordion-chevron { transform: rotate(180deg); }
+  .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 260ms ease; }
+  .accordion-item.is-open .accordion-panel { max-height: 480px; }
+  .accordion-panel-inner { padding: 0 20px 20px; color: var(--text-muted); }
+  .accordion-panel-inner ul { display: flex; flex-direction: column; gap: 8px; }
+  .accordion-panel-inner li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; }
+  .accordion-panel-inner li svg { width: 16px; height: 16px; margin-top: 3px; color: var(--green); flex-shrink: 0; }
+  .benefits-note { font-size: 0.85rem; color: #DCEEDF; margin-top: 4px; }
+
+  /* Payment */
+  .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 26px; }
+  @media (max-width: 860px) { .payment-grid { grid-template-columns: 1fr; } }
+  .payment-card {
+    background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius); padding: 26px; text-align: center; color: #fff;
+  }
+  .payment-card .icon-lg { width: 30px; height: 30px; color: var(--yellow); margin: 0 auto 12px; }
+  .payment-card h3 { color: #fff; font-size: 1.02rem; }
+  .payment-card p { color: #DCEEDF; font-size: 0.92rem; margin: 0; }
+  .qr-code {
+    margin-top: 14px; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: var(--radius);
+    padding: 14px; display: flex; justify-content: center; background: #fff;
+  }
+  .qr-code img { width: 100%; max-width: 160px; height: auto; }
+
+  /* Get involved */
+  .involved-grid { display: grid; grid-template-columns: 1fr; gap: 26px; margin-top: 48px; }
+  @media (min-width: 700px) { .involved-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .involved-grid { grid-template-columns: repeat(4, 1fr); } }
+  .involved-item { text-align: center; padding: 8px; }
+  .involved-icon {
+    width: 60px; height: 60px; margin: 0 auto 16px; border-radius: 50%;
+    background: var(--white); border: 2px solid var(--green-light); display: flex; align-items: center; justify-content: center;
+  }
+  .involved-icon svg { width: 28px; height: 28px; color: var(--green); }
+  .involved-item h3 { font-size: 1rem; margin-bottom: 0.4em; }
+  .involved-item p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+  .tax-note {
+    text-align: center; margin-top: 44px; padding: 18px 24px; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-muted); font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .footer { background: var(--green-dark); color: #DCEEDF; padding: 56px 0 28px; }
+  .footer-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-logo {
+    width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.08);
+    border: 2px solid var(--yellow); display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .footer-logo img { width: 78%; height: auto; }
+  .footer-name { font-family: 'Montserrat', sans-serif; font-weight: 800; color: #fff; font-size: 1.15rem; }
+  .footer-tagline { color: #C6E2CA; font-size: 0.95rem; max-width: 44ch; margin: 0; }
+  .footer-email a { color: var(--yellow); text-decoration: none; font-weight: 600; }
+  .footer-email a:hover { text-decoration: underline; }
+  .footer-social { display: flex; gap: 14px; margin: 6px 0; }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;
+    transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  }
+  .social-btn:hover { background: var(--yellow); border-color: var(--yellow); color: #3D2B04; transform: translateY(-3px); }
+  .social-btn svg { width: 18px; height: 18px; }
+  .footer-legal { margin-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.14); padding-top: 20px; width: 100%; max-width: 560px; }
+  .footer-legal p { font-size: 0.8rem; color: #8FBB98; margin: 0 0 6px; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">
+      <span class="nav-logo"><img src="assets/raven-logo.png" alt=""></span>
+      <span class="nav-brand-text">Ravens on the Green</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#who-we-are" class="nav-link">About</a>
+      <a href="#what-we-fund" class="nav-link">What We Fund</a>
+      <a href="#golf-outing" class="nav-link">Golf Outing</a>
+      <a href="#payment" class="nav-link">Payment</a>
+      <a href="#get-involved" class="nav-link">Get Involved</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#golf-outing" class="btn btn-primary btn-sm nav-cta">Register Now</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <h1 class="hero-club-name">Ravens on the Green</h1>
+      <p class="hero-subtitle">Supporting Robbinsville High School Golf</p>
+      <p class="hero-tagline">Building a championship-caliber golf program — one swing at a time.</p>
+      <div class="hero-actions">
+        <a href="#golf-outing" class="btn btn-light" id="heroRegisterBtn">Register for Golf Outing</a>
+        <a href="#golf-outing" class="btn btn-outline-light" id="heroSponsorBtn">Become a Sponsor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO WE ARE ============ -->
+  <section class="section section-light" id="who-we-are">
+    <div class="container">
+      <p class="eyebrow center">About Us</p>
+      <h2 class="center">Who We Are</h2>
+      <p class="lead center">Ravens on the Green is the official booster club for the Robbinsville High School golf team. We're a group of parents, families, and community members dedicated to giving our student athletes every opportunity to compete, grow, and succeed — on and off the course. As a registered 501(c)(3) nonprofit, every dollar raised goes directly toward supporting our Ravens golfers.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT WE FUND ============ -->
+  <section class="section section-white" id="what-we-fund">
+    <div class="container">
+      <p class="eyebrow center">Where the Money Goes</p>
+      <h2 class="center">What We Fund</h2>
+      <p class="lead center">Every fundraiser and sponsorship goes directly toward these four pillars of the program.</p>
+      <div class="fund-grid">
+        <div class="fund-card">
+          <div class="fund-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V9a4 4 0 0 1 4-4v0a4 4 0 0 1 4 4v12"/><path d="M5 21h14"/><path d="M8 13h8"/><path d="M12 5V3"/></svg></div>
+          <h3>Equipment &amp; Gear</h3>
+          <p>Clubs, bags, and course essentials for every Raven golfer.</p>
+        </div>
+        <div class="fund-card">
+          <div class="fund-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v2l-18 9v-6Z"/><path d="M11.5 8.5 15 14"/></svg></div>
+          <h3>Tournaments &amp; Travel</h3>
+          <p>Entry fees and transportation to matches across the state.</p>
+        </div>
+        <div class="fund-card">
+          <div class="fund-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12.5l2 2 4-4.5"/></svg></div>
+          <h3>Coaching &amp; Training Clinics</h3>
+          <p>Skills clinics and coaching to sharpen every player's game.</p>
+        </div>
+        <div class="fund-card">
+          <div class="fund-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4 4 7l3 3 1-1v10h8V9l1 1 3-3-4-3-2 2h-2L8 4Z"/></svg></div>
+          <h3>Team Apparel &amp; Awards</h3>
+          <p>Uniforms and end-of-season recognition for our golfers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOLF OUTING (cart + checkout) ============ -->
+  <section class="section outing" id="golf-outing">
+    <div class="container">
+      <p class="eyebrow center">Mark Your Calendar</p>
+      <h2 class="center">Annual Golf Outing — October 5, 2026</h2>
+      <p class="lead center" style="color:#DCF0DE; margin-left:auto; margin-right:auto;">Join us for a full day of golf, food, and fun — all in support of the RHS Golf Program.</p>
+
+      <div class="countdown" id="countdown" aria-label="Countdown to the golf outing">
+        <div class="countdown-item"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">Days</span></div>
+        <div class="countdown-item"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label">Hours</span></div>
+        <div class="countdown-item"><span class="countdown-num" id="cd-minutes">--</span><span class="countdown-label">Min</span></div>
+        <div class="countdown-item"><span class="countdown-num" id="cd-seconds">--</span><span class="countdown-label">Sec</span></div>
+      </div>
+
+      <div class="outing-grid">
+        <div class="outing-details">
+          <h3>Event Details</h3>
+          <p class="outing-venue">Cream Ridge Golf Course<br>181 Route 139, Cream Ridge, NJ</p>
+          <ul class="outing-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Registration: $225 per golfer (+$25 optional Player Package)</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="3"/></svg><span>Includes meals, golf, and prizes</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg><span>50/50 raffle and prize raffle on site</span></li>
+          </ul>
+        </div>
+
+        <div class="outing-details">
+          <h3>Registration &amp; Sponsorship</h3>
+          <p style="color:#DCF0DE; font-size:0.92rem; margin-bottom:20px;">Add golfer spots, sponsorships, or booster contributions to your cart below, then check out.</p>
+
+          <div class="tier-tabs" role="tablist" aria-label="Tier categories">
+            <button class="tier-tab is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button class="tier-tab" data-filter="golfer" role="tab" aria-selected="false">Golfers</button>
+            <button class="tier-tab" data-filter="sponsor" role="tab" aria-selected="false">Sponsorships</button>
+            <button class="tier-tab" data-filter="booster" role="tab" aria-selected="false">Boosters</button>
+          </div>
+
+          <div class="tier-group-label" data-group="golfer">Golfer Registration <span class="deadline-pill">By Sept 21, 2026</span></div>
+          <ul class="tier-list" id="tierListGolfer" data-group="golfer"></ul>
+
+          <div class="tier-group-label" data-group="sponsor">Sponsorships <span class="deadline-pill urgent">By Sept 1, 2026</span></div>
+          <ul class="tier-list" id="tierListSponsor" data-group="sponsor"></ul>
+
+          <div class="tier-group-label" data-group="booster">Boosters</div>
+          <p class="field-hint tier-group-note" data-group="booster" style="color:#DCF0DE; margin:-6px 0 12px;">Not a business? Support the team with a personal booster donation — every contribution helps provide our student-athletes with an outstanding experience. All booster donors are recognized on event signage.</p>
+          <ul class="tier-list" id="tierListBooster" data-group="booster"></ul>
+        </div>
+      </div>
+
+      <!-- Checkout -->
+      <div class="checkout" id="checkout">
+        <div class="checkout-empty" id="checkoutEmpty">
+          <p>Your cart is empty. Add a golfer spot, sponsorship, or booster contribution above to get started.</p>
+        </div>
+
+        <form class="checkout-form" id="checkoutForm" novalidate hidden>
+          <h3>Your Info</h3>
+          <div class="form-row">
+            <div class="field">
+              <label for="fullName">Full Name <span class="req">*</span></label>
+              <input type="text" id="fullName" name="fullName" required autocomplete="name">
+              <p class="field-error" data-for="fullName"></p>
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" inputmode="email">
+              <p class="field-error" data-for="email"></p>
+            </div>
+            <div class="field">
+              <label for="phone">Phone <span class="req">*</span></label>
+              <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel">
+              <p class="field-error" data-for="phone"></p>
+            </div>
+          </div>
+
+          <div class="checkout-section" id="golferFields" hidden>
+            <h3>Team &amp; Player Info</h3>
+            <p class="field-hint">Optional — fill in if you already know your foursome.</p>
+            <div class="form-row">
+              <div class="field">
+                <label for="teamName">Team Name</label>
+                <input type="text" id="teamName" name="teamName">
+              </div>
+            </div>
+            <div class="form-row form-row-3">
+              <div class="field">
+                <label for="player2">Additional Player 2</label>
+                <input type="text" id="player2" name="player2">
+              </div>
+              <div class="field">
+                <label for="player3">Additional Player 3</label>
+                <input type="text" id="player3" name="player3">
+              </div>
+              <div class="field">
+                <label for="player4">Additional Player 4</label>
+                <input type="text" id="player4" name="player4">
+              </div>
+            </div>
+            <label class="checkbox-row">
+              <input type="checkbox" id="placeOnTeam" name="placeOnTeam">
+              <span>Place me on a team with other golfers</span>
+            </label>
+          </div>
+
+          <div class="checkout-section" id="sponsorFields" hidden>
+            <h3>Business / Sponsor Info</h3>
+            <div class="form-row">
+              <div class="field">
+                <label for="businessName">Business Name <span class="req">*</span></label>
+                <input type="text" id="businessName" name="businessName">
+                <p class="field-error" data-for="businessName"></p>
+              </div>
+              <div class="field">
+                <label for="contactPerson">Contact Person <span class="req">*</span></label>
+                <input type="text" id="contactPerson" name="contactPerson">
+                <p class="field-error" data-for="contactPerson"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="logoNote">Logo for Signage</label>
+              <textarea id="logoNote" name="logoNote" rows="2" placeholder="Note a link, or email your logo to Misshollyafd@gmail.com"></textarea>
+              <p class="field-hint">Upload isn't wired up yet — please email your logo file to Misshollyafd@gmail.com (per the sponsorship form).</p>
+            </div>
+          </div>
+
+          <h3>Order Summary</h3>
+          <ul class="order-summary" id="orderSummary"></ul>
+          <div class="order-total">
+            <span>Total</span>
+            <span id="orderTotal">$0</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">Continue</button>
+          <p class="form-note">You'll receive payment instructions (cash, check, or Zelle) after submitting — see <a href="#payment" style="color:var(--green);">Payment Info</a>.</p>
+        </form>
+
+        <div class="checkout-success" id="checkoutSuccess" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="success-icon"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3>You're in the clubhouse!</h3>
+          <p style="color:var(--text-muted);">Thanks for supporting Ravens on the Green. A confirmation has been sent — check <a href="#payment" style="color:var(--green);">Payment Info</a> for how to complete your payment.</p>
+          <button class="btn btn-outline" id="resetCheckout" type="button">Start a new order</button>
+        </div>
+      </div>
+
+      <!-- Sponsor & Booster benefits -->
+      <div id="benefits" style="margin-top:64px; scroll-margin-top: var(--nav-height);">
+        <h3 class="center" style="color:#fff;">Sponsor &amp; Booster Benefits</h3>
+        <p class="lead center benefits-note">Tap any tier for the full benefit list.</p>
+        <div class="accordion" id="benefitsAccordion"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAYMENT (part of golf outing flow) ============ -->
+  <section class="section outing" id="payment" style="padding-top:64px;">
+    <div class="container">
+      <p class="eyebrow center">Payment Info</p>
+      <h2 class="center">How to Pay</h2>
+      <p class="lead center" style="color:#DCF0DE; margin-left:auto; margin-right:auto;">Once you've submitted your registration or sponsorship, complete payment one of these ways.</p>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+          <h3>Cash</h3>
+          <p>Bring cash the day of the event, or in person to a Ravens on the Green board member.</p>
+        </div>
+        <div class="payment-card">
+          <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 4-8"/></svg>
+          <h3>Check</h3>
+          <p>Make checks payable to <strong>"Ravens on the Green"</strong> and mail to the address in our <a href="#contact" style="color:var(--yellow);">Contact</a> section.</p>
+        </div>
+        <div class="payment-card">
+          <svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+          <h3>Zelle</h3>
+          <p>Send to <strong>ravensonthegreen</strong> via Zelle, or scan to pay.</p>
+          <div class="qr-code">
+            <img src="assets/zelle-qr.png" alt="Zelle QR code — scan with your banking app to pay Ravens on the Green">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GET INVOLVED ============ -->
+  <section class="section section-light" id="get-involved">
+    <div class="container">
+      <p class="eyebrow center">Join the Team</p>
+      <h2 class="center">Get Involved</h2>
+      <p class="lead center">There are plenty of ways to support the Ravens — pick the one that fits you best.</p>
+      <div class="involved-grid">
+        <div class="involved-item">
+          <div class="involved-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 8.5 22 9.5 17 14.3 18.2 21 12 17.8 5.8 21 7 14.3 2 9.5 9 8.5 12 2Z"/></svg></div>
+          <h3>Become a Sponsor</h3>
+          <p>Put your business in front of the community while backing our golfers.</p>
+        </div>
+        <div class="involved-item">
+          <div class="involved-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6c0 4.5-8.8 10.4-8.8 10.4S3.2 13.1 3.2 8.6a4.6 4.6 0 0 1 8.8-1.9 4.6 4.6 0 0 1 8.8 1.9Z"/></svg></div>
+          <h3>Make a Donation</h3>
+          <p>Every gift is tax-deductible and goes straight to the program.</p>
+        </div>
+        <div class="involved-item">
+          <div class="involved-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Volunteer at Events</h3>
+          <p>Lend a hand at the golf outing and other club events all season.</p>
+        </div>
+        <div class="involved-item">
+          <div class="involved-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l4 4V5L6 9H5a2 2 0 0 0-2 2Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 5.5a9 9 0 0 1 0 13"/></svg></div>
+          <h3>Spread the Word</h3>
+          <p>Follow, share, and tell fellow Robbinsville families about us.</p>
+        </div>
+      </div>
+      <p class="tax-note">All donations are tax-deductible. Ravens on the Green is a registered 501(c)(3) nonprofit.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Sticky cart bar -->
+<div class="cart-bar" id="cartBar" hidden>
+  <div class="container cart-bar-inner">
+    <div class="cart-bar-summary">
+      <span class="cart-bar-count" id="cartCount">0 items</span>
+      <span class="cart-bar-total" id="cartBarTotal">$0</span>
+    </div>
+    <button class="btn btn-light" id="cartBarContinue">Continue <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</div>
+
+<!-- ============ CONTACT / FOOTER ============ -->
+<footer class="footer" id="contact">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo"><img src="assets/raven-logo.png" alt="Ravens on the Green logo"></span>
+      <span class="footer-name">Ravens on the Green</span>
+    </div>
+    <p class="footer-tagline">Building a championship-caliber golf program — one swing at a time.</p>
+    <p class="footer-email"><a href="mailto:ravensonthegreen@gmail.com">ravensonthegreen@gmail.com</a></p>
+    <div class="footer-social">
+      <a href="#" class="social-btn" aria-label="Ravens on the Green on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="#" class="social-btn" aria-label="Ravens on the Green on Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8h2V4h-2a5 5 0 0 0-5 5v2H8v4h2v7h4v-7h3l1-4h-4v-2a1 1 0 0 1 1-1Z"/></svg>
+      </a>
+    </div>
+    <div class="footer-legal">
+      <p>© 2026 Ravens on the Green. All rights reserved.</p>
+      <p>Ravens on the Green is a 501(c)(3) tax-exempt nonprofit organization.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ------------------------------------------------------------------ *
+   * CONFIG — replace with your real Formspree endpoint before launch.
+   * Create a free form at https://formspree.io, then paste its ID below.
+   * ------------------------------------------------------------------ */
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xrenwrjb';
+  const EVENT_DATE = new Date('2026-10-05T08:00:00-04:00');
+
+  /* ------------------------------------------------------------------ *
+   * Tier data (ported from the original registration cart)
+   * ------------------------------------------------------------------ */
+  const TIERS = [
+    {
+      id: 'golfer', group: 'golfer', name: 'Individual Golfer', price: 225,
+      desc: 'One golfer entry to the Charity Golf Outing. Includes greens fee, cart, and lunch.',
+      addon: { id: 'package', name: 'Player Package', price: 25, desc: '2 mulligans + entry into the putting contest for prizes' }
+    },
+    {
+      id: 'foursome', group: 'golfer', name: 'Foursome', price: 900,
+      desc: 'Register a full team of 4 golfers together. Includes greens fees, carts, and lunch for all 4 players.'
+    },
+    {
+      id: 'eagle', group: 'sponsor', name: 'Eagle Sponsor', price: 500, featured: true,
+      desc: 'Our top sponsorship tier — maximum signage, social, and event-day recognition.'
+    },
+    {
+      id: 'birdie', group: 'sponsor', name: 'Birdie Sponsor', price: 250,
+      desc: 'Prominent signage and recognition across the event and our channels.'
+    },
+    {
+      id: 'teebox', group: 'sponsor', name: 'Tee Box Sponsor', price: 150,
+      desc: 'Sponsor a tee box with your business signage displayed on the course.'
+    },
+    {
+      id: 'firsttee', group: 'booster', name: 'First Tee Booster', price: 25,
+      desc: 'A great way to show your support for RHS Golf.'
+    },
+    {
+      id: 'fairway', group: 'booster', name: 'Fairway Booster', price: 50,
+      desc: 'Help us keep our golfers on course for a successful season.'
+    },
+    {
+      id: 'greenside', group: 'booster', name: 'Greenside Booster', price: 75,
+      desc: 'Your generous support makes a meaningful impact on our team.'
+    },
+    {
+      id: 'clubhouse', group: 'booster', name: 'Clubhouse Booster', price: 100,
+      desc: 'Our highest individual booster level.'
+    }
+  ];
+
+  /* Benefit bullets pulled verbatim from the printed 2026 flyer. */
+  const BENEFITS = {
+    eagle: [
+      'Prominent logo placement on event signage and printed materials',
+      'Recognition on event social media before and after the outing',
+      'Verbal recognition during event announcements and awards',
+      'Complimentary tee box sponsorship sign'
+    ],
+    birdie: [
+      'Name or logo displayed on event sponsor signage',
+      'Recognition in printed event materials',
+      'Recognition on event social media',
+      'Event day acknowledgment signage'
+    ],
+    teebox: [
+      'Custom sponsor sign displayed at one tee box during the outing',
+      'Recognition in printed event materials',
+      'Recognition on social media'
+    ],
+    firsttee: [
+      'A great way to show your support for RHS Golf',
+      'Recognized on event signage'
+    ],
+    fairway: [
+      'Helps keep our golfers on course for a successful season',
+      'Recognized on event signage'
+    ],
+    greenside: [
+      'A meaningful impact on our team',
+      'Recognized on event signage'
+    ],
+    clubhouse: [
+      'Our highest individual booster level',
+      'Recognized on event signage'
+    ]
+  };
+
+  const fmt = (n) => `$${n.toLocaleString('en-US')}`;
+  const byId = (id) => TIERS.find((t) => t.id === id);
+
+  /* Cart state: { [tierId]: { qty, addon: bool } } */
+  const cart = {};
+
+  function cartLines() {
+    const lines = [];
+    Object.keys(cart).forEach((id) => {
+      const entry = cart[id];
+      if (!entry || entry.qty <= 0) return;
+      const tier = byId(id);
+      lines.push({ id, name: tier.name, unitPrice: tier.price, qty: entry.qty, total: tier.price * entry.qty });
+      if (entry.addon && tier.addon) {
+        lines.push({ id: `${id}-addon`, name: ` + ${tier.addon.name}`, unitPrice: tier.addon.price, qty: entry.qty, total: tier.addon.price * entry.qty });
+      }
+    });
+    return lines;
+  }
+
+  function cartTotal() { return cartLines().reduce((sum, l) => sum + l.total, 0); }
+  function cartItemCount() { return cartLines().reduce((sum, l) => sum + l.qty, 0); }
+  function cartHasGroup(group) { return Object.keys(cart).some((id) => cart[id]?.qty > 0 && byId(id).group === group); }
+
+  const listEls = {
+    golfer: document.getElementById('tierListGolfer'),
+    sponsor: document.getElementById('tierListSponsor'),
+    booster: document.getElementById('tierListBooster')
+  };
+
+  function renderTiers() {
+    Object.values(listEls).forEach((el) => { el.innerHTML = ''; });
+
+    TIERS.forEach((tier) => {
+      const entry = cart[tier.id];
+      const qty = entry?.qty || 0;
+
+      const li = document.createElement('li');
+      li.className = 'tier-row' + (qty > 0 ? ' is-in-cart' : '') + (tier.featured ? ' is-featured' : '');
+      li.dataset.tierId = tier.id;
+
+      const main = document.createElement('div');
+      main.className = 'tier-main';
+      main.innerHTML = `
+        <div class="tier-name-row">
+          <div class="tier-name">${tier.name}</div>
+          ${tier.featured ? '<span class="tier-badge">Most Popular</span>' : ''}
+        </div>
+        <p class="tier-desc">${tier.desc}</p>
+      `;
+
+      if (tier.addon && qty > 0) {
+        const addonWrap = document.createElement('div');
+        addonWrap.className = 'tier-addon';
+        addonWrap.innerHTML = `
+          <label>
+            <input type="checkbox" data-addon-for="${tier.id}" ${entry.addon ? 'checked' : ''}>
+            <span>Add ${tier.addon.name} (+${fmt(tier.addon.price)}) — ${tier.addon.desc}</span>
+          </label>
+        `;
+        main.appendChild(addonWrap);
+      }
+
+      const price = document.createElement('div');
+      price.className = 'tier-price';
+      price.textContent = fmt(tier.price);
+
+      const action = document.createElement('div');
+      action.className = 'tier-action';
+      if (qty > 0) {
+        action.innerHTML = `
+          <div class="qty-stepper">
+            <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease ${tier.name} quantity">−</button>
+            <span class="qty-val">${qty}</span>
+            <button type="button" class="qty-btn" data-action="inc" aria-label="Increase ${tier.name} quantity">+</button>
+          </div>
+        `;
+      } else {
+        action.innerHTML = `<button type="button" class="btn btn-light btn-sm" data-action="add" aria-label="Add ${tier.name} to cart">Add</button>`;
+      }
+
+      li.append(main, price, action);
+      listEls[tier.group].appendChild(li);
+    });
+
+    applyTierFilter(currentFilter);
+  }
+
+  function setQty(tierId, qty) {
+    if (!cart[tierId]) cart[tierId] = { qty: 0, addon: false };
+    cart[tierId].qty = Math.max(0, qty);
+    if (cart[tierId].qty === 0) delete cart[tierId];
+    renderTiers();
+    renderCheckout();
+    renderCartBar();
+  }
+
+  [listEls.golfer, listEls.sponsor, listEls.booster].forEach((list) => {
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const row = btn.closest('.tier-row');
+      const tierId = row.dataset.tierId;
+      const current = cart[tierId]?.qty || 0;
+      if (btn.dataset.action === 'add' || btn.dataset.action === 'inc') setQty(tierId, current + 1);
+      if (btn.dataset.action === 'dec') setQty(tierId, current - 1);
+    });
+    list.addEventListener('change', (e) => {
+      const box = e.target.closest('input[data-addon-for]');
+      if (!box) return;
+      const tierId = box.dataset.addonFor;
+      if (!cart[tierId]) return;
+      cart[tierId].addon = box.checked;
+      renderCheckout();
+      renderCartBar();
+    });
+  });
+
+  /* Tier tabs filter */
+  let currentFilter = 'all';
+  const tabButtons = document.querySelectorAll('.tier-tab');
+  const groupLabels = document.querySelectorAll('.tier-group-label, .tier-group-note');
+
+  function applyTierFilter(filter) {
+    currentFilter = filter;
+    tabButtons.forEach((b) => {
+      const active = b.dataset.filter === filter;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-selected', String(active));
+    });
+    Object.entries(listEls).forEach(([group, el]) => {
+      el.hidden = !(filter === 'all' || filter === group);
+    });
+    groupLabels.forEach((label) => {
+      label.hidden = !(filter === 'all' || filter === label.dataset.group);
+    });
+  }
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => applyTierFilter(btn.dataset.filter));
+  });
+
+  /* Checkout panel */
+  const checkoutEmpty = document.getElementById('checkoutEmpty');
+  const checkoutForm = document.getElementById('checkoutForm');
+  const checkoutSuccess = document.getElementById('checkoutSuccess');
+  const golferFields = document.getElementById('golferFields');
+  const sponsorFields = document.getElementById('sponsorFields');
+  const orderSummaryEl = document.getElementById('orderSummary');
+  const orderTotalEl = document.getElementById('orderTotal');
+
+  function renderCheckout() {
+    const lines = cartLines();
+    const empty = lines.length === 0;
+
+    checkoutEmpty.hidden = !empty;
+    checkoutForm.hidden = empty;
+    if (empty) { checkoutSuccess.hidden = true; }
+    if (empty) return;
+
+    golferFields.hidden = !cartHasGroup('golfer');
+    sponsorFields.hidden = !cartHasGroup('sponsor');
+
+    orderSummaryEl.innerHTML = lines.map((l) => `
+      <li>
+        <span class="os-name">${l.name}${l.qty > 1 ? ` × ${l.qty}` : ''}</span>
+        <span class="os-price">${fmt(l.total)}</span>
+      </li>
+    `).join('');
+    orderTotalEl.textContent = fmt(cartTotal());
+  }
+
+  /* Sticky cart bar */
+  const cartBar = document.getElementById('cartBar');
+  const cartCountEl = document.getElementById('cartCount');
+  const cartBarTotalEl = document.getElementById('cartBarTotal');
+
+  function renderCartBar() {
+    const count = cartItemCount();
+    const show = count > 0;
+    cartBar.hidden = !show;
+    document.body.classList.toggle('has-cart-bar', show);
+    if (!show) return;
+    cartCountEl.textContent = `${count} item${count === 1 ? '' : 's'}`;
+    cartBarTotalEl.textContent = fmt(cartTotal());
+  }
+
+  document.getElementById('cartBarContinue').addEventListener('click', () => {
+    document.getElementById('golf-outing').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => (checkoutForm.hidden ? null : checkoutForm.querySelector('input')?.focus()), 500);
+  });
+
+  /* Hero CTAs: scroll + pre-filter the tier tabs */
+  document.getElementById('heroRegisterBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    applyTierFilter('golfer');
+    document.getElementById('golf-outing').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('heroSponsorBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    applyTierFilter('sponsor');
+    document.getElementById('golf-outing').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  /* Form validation + submit */
+  function fieldError(input, message) {
+    const field = input.closest('.field');
+    const errorEl = field?.querySelector('.field-error');
+    if (message) {
+      field?.classList.add('has-error');
+      if (errorEl) errorEl.textContent = message;
+    } else {
+      field?.classList.remove('has-error');
+      if (errorEl) errorEl.textContent = '';
+    }
+  }
+
+  function validateForm() {
+    let valid = true;
+    let firstInvalid = null;
+
+    const required = [checkoutForm.fullName, checkoutForm.email, checkoutForm.phone];
+    if (!sponsorFields.hidden) required.push(checkoutForm.businessName, checkoutForm.contactPerson);
+
+    required.forEach((input) => {
+      if (!input) return;
+      const value = input.value.trim();
+      let message = '';
+      if (!value) message = 'This field is required.';
+      else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) message = 'Enter a valid email address.';
+      else if (input.type === 'tel' && value.replace(/\D/g, '').length < 10) message = 'Enter a valid phone number.';
+
+      fieldError(input, message);
+      if (message) {
+        valid = false;
+        if (!firstInvalid) firstInvalid = input;
+      }
+    });
+
+    if (firstInvalid) firstInvalid.focus();
+    return valid;
+  }
+
+  ['fullName', 'email', 'phone', 'businessName', 'contactPerson'].forEach((name) => {
+    checkoutForm.addEventListener('blur', (e) => {
+      if (e.target.name === name) validateForm();
+    }, true);
+  });
+
+  checkoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    const lines = cartLines();
+    const payload = {
+      fullName: checkoutForm.fullName.value.trim(),
+      email: checkoutForm.email.value.trim(),
+      phone: checkoutForm.phone.value.trim(),
+      teamName: checkoutForm.teamName?.value.trim() || '',
+      player2: checkoutForm.player2?.value.trim() || '',
+      player3: checkoutForm.player3?.value.trim() || '',
+      player4: checkoutForm.player4?.value.trim() || '',
+      placeOnTeam: checkoutForm.placeOnTeam?.checked || false,
+      businessName: checkoutForm.businessName?.value.trim() || '',
+      contactPerson: checkoutForm.contactPerson?.value.trim() || '',
+      logoNote: checkoutForm.logoNote?.value.trim() || '',
+      order: lines.map((l) => `${l.name} x${l.qty} = ${fmt(l.total)}`).join('\n'),
+      total: fmt(cartTotal())
+    };
+
+    try {
+      if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+        console.warn('Formspree endpoint not configured. See landing.html script. Payload:', payload);
+        await new Promise((r) => setTimeout(r, 400));
+      } else {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Submission failed');
+      }
+
+      checkoutForm.hidden = true;
+      checkoutSuccess.hidden = false;
+      checkoutSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Continue';
+      alert('Something went wrong submitting your order. Please try again, or email ravensonthegreen@gmail.com.');
+    }
+  });
+
+  document.getElementById('resetCheckout').addEventListener('click', () => {
+    Object.keys(cart).forEach((id) => delete cart[id]);
+    checkoutForm.reset();
+    document.querySelectorAll('.field.has-error').forEach((f) => f.classList.remove('has-error'));
+    checkoutSuccess.hidden = true;
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = 'Continue';
+    renderTiers();
+    renderCheckout();
+    renderCartBar();
+    document.getElementById('golf-outing').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  /* Benefits accordion */
+  const accordionEl = document.getElementById('benefitsAccordion');
+  const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>';
+
+  function renderAccordion() {
+    accordionEl.innerHTML = TIERS
+      .filter((t) => t.group === 'sponsor' || t.group === 'booster')
+      .map((tier) => {
+        const bullets = (BENEFITS[tier.id] || []).map((b) => `<li>${checkSvg}<span>${b}</span></li>`).join('');
+        return `
+          <div class="accordion-item" data-tier="${tier.id}">
+            <button type="button" class="accordion-trigger" aria-expanded="false">
+              <span class="accordion-trigger-left">${tier.name} <span class="accordion-price">${fmt(tier.price)}</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-panel">
+              <div class="accordion-panel-inner"><ul>${bullets}</ul></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+    accordionEl.querySelectorAll('.accordion-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.accordion-item');
+        const isOpen = item.classList.toggle('is-open');
+        trigger.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+  }
+
+  /* Countdown timer */
+  function updateCountdown() {
+    const now = new Date();
+    const diff = EVENT_DATE - now;
+    const els = {
+      d: document.getElementById('cd-days'),
+      h: document.getElementById('cd-hours'),
+      m: document.getElementById('cd-minutes'),
+      s: document.getElementById('cd-seconds')
+    };
+    if (diff <= 0) {
+      els.d.textContent = els.h.textContent = els.m.textContent = els.s.textContent = '0';
+      return;
+    }
+    els.d.textContent = String(Math.floor(diff / 86400000));
+    els.h.textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    els.m.textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    els.s.textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+
+  /* Mobile nav toggle */
+  const nav = document.getElementById('siteNav');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  /* Init */
+  renderTiers();
+  renderCheckout();
+  renderCartBar();
+  renderAccordion();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
+</script>
+
+</body>
+</html>
